@@ -1,9 +1,35 @@
-//µÚÒ»¸öÁ·Ï°£¬»æÖÆ¸÷ÖÖ¼¸ºÎÍ¼ĞÎ
+ï»¿//ç¬¬ä¸€ä¸ªç»ƒä¹ ï¼Œç»˜åˆ¶å„ç§å‡ ä½•å›¾å½¢
 #include "stdafx.h" 
 #include <GL/glut.h>
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-void myDisplay(void){
+void DrawPoints(void){
+	glClear(GL_COLOR_BUFFER_BIT);
+	glPointSize(5.0f);
+	glBegin(GL_POINTS);
+	glVertex2f(0.0, 0.0);
+	glVertex2f(0.5f, 0.5f);
+
+	glEnd();
+	glFlush();
+}
+
+void DrawLines(void){
+	glClear(GL_COLOR_BUFFER_BIT);
+	
+	glEnable(GL_LINE_STRIP);
+	glLineStipple(2, 0x0F0F);
+	glLineWidth(5.0f);
+	glBegin(GL_LINES);
+	glVertex2f(0.0f, 0.0f);
+	glVertex2f(0.5f, 0.5f);
+	glEnd();
+	glFlush();
+}
+
+void DrawRect(void){
 	glClear(GL_COLOR_BUFFER_BIT);
 	glRectf(-0.5f, -0.5f, 0.5f, 0.5f);
 	glFlush();
@@ -34,7 +60,7 @@ void DrawMyFiveAngleStar(void){
 		PointE[2] = { -bx, by };
 
 	glClear(GL_COLOR_BUFFER_BIT);
-	// °´ÕÕA->C->E->B->D->AµÄË³Ğò£¬¿ÉÒÔÒ»±Ê½«Îå½ÇĞÇ»­³ö
+	// æŒ‰ç…§A->C->E->B->D->Açš„é¡ºåºï¼Œå¯ä»¥ä¸€ç¬”å°†äº”è§’æ˜Ÿç”»å‡º
 	glBegin(GL_LINE_LOOP);
 	glVertex2fv(PointA);
 	glVertex2fv(PointC);
@@ -67,20 +93,96 @@ void DrawSinCurve(void){
 
 void DrawPloygon(void){
 	glClear(GL_COLOR_BUFFER_BIT);
-	glPolygonMode(GL_FRONT, GL_FILL);//ÉèÖÃÕıÃæÎªÌî³äÄ£Ê½
-	glPolygonMode(GL_BACK, GL_LINE);//ÉèÖÃ·´ÃæÎªÏßĞÎÄ£Ê½
+	glPolygonMode(GL_FRONT, GL_FILL);//è®¾ç½®æ­£é¢ä¸ºå¡«å……æ¨¡å¼
+	glPolygonMode(GL_BACK, GL_LINE);//è®¾ç½®åé¢ä¸ºçº¿å½¢æ¨¡å¼
 	glFrontFace(GL_CCW);
 	glBegin(GL_POLYGON);
 	glVertex2f(-0.5f, -0.5f);
 	glVertex2f(0.0f, -0.5f);
 	glVertex2f(0.0f, 0.0f);
-	glVertex2f(-0.5f, 0.0f);
+	//glVertex2f(-0.5f, 0.0f);
 	glEnd();
 	glBegin(GL_POLYGON);
 	glVertex2f(0.0f, 0.0f);
 	glVertex2f(0.0f, 0.5f);
 	glVertex2f(0.5f, 0.5f);
-	glVertex2f(0.5f, 0.0f);
+	//glVertex2f(0.5f, 0.0f);
+	glEnd();
+	glFlush();
+}
+
+void DrawLouKong(void){
+	//static GLubyte Mask[128];
+	static GLubyte Mask[128] =
+	{
+		0x00, 0x00, 0x00, 0x00,//Â Â è¿™æ˜¯æœ€ä¸‹é¢çš„ä¸€è¡Œ
+		0x00, 0x00, 0x00, 0x00,
+		0x03, 0x80, 0x01, 0xC0,//Â Â éº»
+		0x06, 0xC0, 0x03, 0x60,//Â Â çƒ¦
+		0x04, 0x60, 0x06, 0x20,//Â Â çš„
+		0x04, 0x30, 0x0C, 0x20,//Â Â åˆ
+		0x04, 0x18, 0x18, 0x20,//Â Â å§‹
+		0x04, 0x0C, 0x30, 0x20,//Â Â åŒ–
+		0x04, 0x06, 0x60, 0x20,//Â Â ï¼Œ
+		0x44, 0x03, 0xC0, 0x22,//Â Â ä¸
+		0x44, 0x01, 0x80, 0x22,//Â Â å»º
+		0x44, 0x01, 0x80, 0x22,//Â Â è®®
+		0x44, 0x01, 0x80, 0x22,//Â Â ä½¿
+		0x44, 0x01, 0x80, 0x22,//Â Â ç”¨
+		0x44, 0x01, 0x80, 0x22,
+		0x44, 0x01, 0x80, 0x22,
+		0x66, 0x01, 0x80, 0x66,
+		0x33, 0x01, 0x80, 0xCC,
+		0x19, 0x81, 0x81, 0x98,
+		0x0C, 0xC1, 0x83, 0x30,
+		0x07, 0xE1, 0x87, 0xE0,
+		0x03, 0x3F, 0xFC, 0xC0,
+		0x03, 0x31, 0x8C, 0xC0,
+		0x03, 0x3F, 0xFC, 0xC0,
+		0x06, 0x64, 0x26, 0x60,
+		0x0C, 0xCC, 0x33, 0x30,
+		0x18, 0xCC, 0x33, 0x18,
+		0x10, 0xC4, 0x23, 0x08,
+		0x10, 0x63, 0xC6, 0x08,
+		0x10, 0x30, 0x0C, 0x08,
+		0x10, 0x18, 0x18, 0x08,
+		0x10, 0x00, 0x00, 0x08 //Â è¿™æ˜¯æœ€ä¸Šé¢çš„ä¸€è¡Œ
+	};
+	
+	FILE *fp;
+	fp = fopen("mask.bmp", "rb");
+	if (!fp){
+		exit(0);
+	}
+	if (fseek(fp, -(int)sizeof(Mask), SEEK_END)){
+		exit(0);
+	}
+	if (!fread(Mask, sizeof(Mask), 1, fp)){
+		exit(0);
+	}
+	fclose(fp);
+	glClearColor(0.5f, 0.5f, 0.5f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glColor3f(0.3f, 0.5f, 0.1f);
+	glEnable(GL_POLYGON_STIPPLE);
+	glPolygonStipple(Mask);
+	glRectf(-0.5f, -0.5f, 0.0f, 0.0f);
+	glDisable(GL_POLYGON_STIPPLE);
+	glRectf(0.5f, 0.5f, 0.0f, 0.0f);
+	glFlush();
+}
+
+void GiveDiffColor(){
+	int i;
+	//glShadeModel(GL_FLAT);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glBegin(GL_TRIANGLE_FAN);
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glVertex2f(0.0f, 0.0f);
+	for (i = 0; i <= 8; ++i){
+		glColor3f(i & 0x04, i & 0x02, i & 0x01);
+		glVertex2f(cos(i*Pi / 4), sin(i*Pi / 4));
+	}
 	glEnd();
 	glFlush();
 }
@@ -90,8 +192,8 @@ int main(int argc, char *argv[]){
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
 	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(800, 800);
-	glutCreateWindow("µÚÒ»¸öOpenGL³ÌĞò");
-	glutDisplayFunc(&DrawPloygon);
+	glutCreateWindow("OpenGLæ¼”ç¤ºç¨‹åº");
+	glutDisplayFunc(&GiveDiffColor);
 	glutMainLoop();
 	return 0;
 }
