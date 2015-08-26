@@ -187,6 +187,7 @@ void GiveDiffColor(){
 	glFlush();
 }
 
+/*
 int main(int argc, char *argv[]){
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
@@ -197,6 +198,7 @@ int main(int argc, char *argv[]){
 	glutMainLoop();
 	return 0;
 }
+*/
 
 
 
